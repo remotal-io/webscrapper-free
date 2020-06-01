@@ -9,3 +9,148 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
 
 # Installation
  Link to chrome web store coming on July 1st.
+
+# Table of content
+
+1. [Usage](#usage)  
+    1. [SCRAPPER.JS](#scrapperjs)  
+        1. [rws.log](#rwslog)  
+        2. [rws.resolve](#rwsresolve)  
+        3. [rws.manualActionRequired](#rwsmanualactionrequired)  
+    2. [URLS.JSON](#urlsjson)  
+
+
+# Usage
+
+## SCRAPPER.JS
+
+### rws.log
+
+#### Definition
+```javascript
+/** 
+ * Use this function to log inside the extension console.  
+ * `log(object)` will also perform a `console.log(object)` inside the target page.
+ * @param {any} object - Must be a json serializable object, a HTMLElement or a DOM Node.
+ * @param {String} [type=json] - (default:json) Which colorization to apply. Available values `['typescript', 'javascript', 'json', 'html', 'css', 'text']`
+ * @returns {String} the logged string.
+ */
+log: (object, type='json') => {},
+```
+#### Examples
+```javascript
+rws.log({a:1});
+rws.log(document.querySelectorAll('H1'));
+rws.log(document.URL, 'text');
+rws.log('console.log("test");', 'javascript');
+```
+#### Good to know
+`rws.log` will do its best to stringify the object passed before sending it to the right panel. For this reason, it is also displayed as is in the target tab developer console.
+The following types are available: `'typescript'`, `'javascript'`, `'json'`, `'html'`, `'css'`, `'text'`.  
+
+### rws.resolve
+
+You must always call this function to end your script, or it will hang and never stop.  
+
+#### Definition
+```javascript
+/**
+ * This object contains the data you want to save and optionnaly a button to click to scrap the next.
+ * @typedef ScriptAction
+ * @type {object}
+ * @property {any} data - the data you want to save when this script ends.
+ * @property {Object} [nextPage] - (optionnal) if you want to execute the script on another page.
+ * @property {string} nextPage.buttonPath - The element to send a `click` event to.
+ * @property {String} [nextPage.waitElemPath] - (optionnal) If defined, will wait for this elem to be present in the page before running the script again instead of waiting for the page to reload. Useful if the clicked elem triggers an ajax call.
+ */
+/** 
+ * Call this function to :
+ * 1. end your script  
+ * 2. collect the data  
+ * 3. (optional) click on button and execute your script again after the page loads  
+ * @param {ScriptAction} [action]
+ * @returns {void} make sure to end your script after this call.
+ */
+resolve: (action) => {},
+```
+#### Examples
+Ends your script, doesn't save any data.  
+```javascript
+rws.resolve();
+```
+Ends your script, saves url.  
+Adding `/** @type {ScriptAction} */` above the variable will activate auto-completion in the editor.
+```javascript
+/** @type {ScriptAction} */
+let scriptAction = {data:{ url:document.URL }};
+rws.resolve(scriptAction);
+```
+`...more processsing here...` will be executed and might cause an error or unwanted behavior. Always make sure `rws.resolve()` is your last call.
+```javascript
+rws.resolve();
+...more processsing here...
+```
+Ends your script, saves your data, send a click event to `buttonPath` and wait for the page to be reloaded before executing your script again.  
+You must make sure `buttonPath` exists before passing it, otherwise the page will never reload and the scrapper will hang.  
+```javascript
+/** @type {ScriptAction} */
+let scriptAction = {
+  data: {url: document.URL},
+  nextPage: {
+    buttonPath: '.nextPage',
+  }
+};
+rws.resolve(scriptAction)
+```
+Ends your script, saves your data, send a click event to `buttonPath` and wait for the `waitElemPath` to be present in the page before executing your script again.  
+You must make sure `buttonPath` exists before passing it, otherwise the scrapper will wait forever for `waitElemPath` to appear.  
+```javascript
+/** @type {ScriptAction} */
+let scriptAction = {
+  data: {url: document.URL},
+  nextPage: {
+    buttonPath: '.nextPage',
+    waitElemPath: '.newElement',
+  }
+};
+rws.resolve(scriptAction)
+```
+#### Good to know
+Your script runs inside a promise. Therefor failing to call `rws.resolve()` will result in an ever hanging scrapper.  
+When is happens, close the target tab and refresh the extension.
+
+### rws.manualActionRequired
+
+Maybe the most ground-breaking feature here.  
+When you call this function, it will display a modal in the extension window. Depending on your answer, it will either skip the current page or re-run the script.  
+
+As example, you can :
+ - check whether the website caught you as a robot and displayed a captcha.
+ - Call `rws.manualActionRequired` to pause your processing and wait for a user intervention.
+ - Re-execute your script again.
+
+#### Definition
+```javascript
+/** 
+ * example use case:
+ * You identify the page is a captcha needing solving in order to access the actual content.
+ * You call `manualActionRequired('Please resolve captcha')` :
+ * 1. A dialog will appear in the editor
+ * 2. you resolve the captcha manually
+ * 3. you wait for the content of the page to be loaded
+ * 3. you click the "Continue" button to re-run the script on the page.
+ * @param {String} message - the message displayed in the extension.
+ * @returns {void} make sure to end your script after this call.
+ */
+manualActionRequired: (message) => {},
+```
+#### Examples
+At the beginning of our scrapper.js script, we check if the website redirected us to a capthcha page. If yes, request user intervention.  
+```javascript
+if (document.URL.includes('url/path/to/catch.robots'))
+ return rws.manualActionRequired('Please validate the captcha page, wait for it to be reloaded and click continue.');
+```
+#### Good to know
+Make sure your script end after calling this function, otherwise the rest will be executed causing unwanted behaviors.  
+
+## URLS.JSON
