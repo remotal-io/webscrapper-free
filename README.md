@@ -23,6 +23,7 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
         1. [rws.log](#rwslog-1)  
         2. [rws.resolve](#rwsresolve-1)  
         3. [rws.data](#rwsdata)  
+        4. [rws.saveAs](#rwssaveas)  
 
 # Usage
 
@@ -284,3 +285,28 @@ rws.data.map(...);
 
 #### Good to know
 You can't edit them. At least it won't be reflected back in DATA.JSON.  
+
+### rws.saveAs
+
+Allows you to save a string as a file in your browser.
+
+#### Definition
+```javascript
+/** 
+ * Use this function to download a string as a file in the browser.
+ * @param {String} data
+ * @param {String} mimeType - See {@link https://www.iana.org/assignments/media-types/media-types.xhtml List of types}
+ * @param {String} name
+ * @returns {String} the logged string.
+ */
+saveAs: (data, mimeType, name) => {},
+```
+
+#### Examples
+Save data locally in a json file.
+```javascript
+rws.saveAs(JSON.stringify(rws.data), 'application/json', 'myFile.json');
+```
+
+#### Good to know
+This functionnality relies on [file-saver](https://github.com/eligrey/FileSaver.js).  
