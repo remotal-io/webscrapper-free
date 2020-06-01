@@ -8,4 +8,4 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
 [![youtubevideo](https://img.youtube.com/vi/7GL9g8ac9ME/0.jpg)](https://youtu.be/7GL9g8ac9ME)
 
 # Installation
- Link to chrome web store coming on June 15th.
+ Link to chrome web store coming on July 1st.
