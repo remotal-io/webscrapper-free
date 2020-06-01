@@ -19,11 +19,18 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
         3. [rws.manualActionRequired](#rwsmanualactionrequired)  
     2. [URLS.JSON](#urlsjson)  
     3. [DATA.JSON](#datajson)  
-
+    3. [DATAWORKER.JS](#dataworkerjs)  
+        1. [rws.log](#rwslog-1)  
+        2. [rws.resolve](#rwsresolve-1)  
+        3. [rws.data](#rwsdata)  
 
 # Usage
 
 ## SCRAPPER.JS
+
+This script is run inside a content script injected in the selected target tab.  
+It means you can manipulate DOM, and you have a separate javascript runtime. Even if the target website uses JQuery, you won't have access to it.  
+Also, you should never use global variable inside this script. do not use `window.myvar =...` or `var myvar =...`.  
 
 ### rws.log
 
@@ -207,3 +214,73 @@ DATA.JSON will look like this:
 Each time scrapper.js run, the scrapped data are encapsulated inside `userData`.  
 `url`, `date`, `title` are also automatically filled in.  
 NB: `date` is the result of `new Date()` at the time the data was returned.
+
+## DATAWORKER.JS
+
+This script is run inside a web kworker created in the extension tab.
+It means you can not manipulate the DOM, and you have a separate javascript runtime.
+
+Reccomendations:
+ - you shouldn't transform your data here.  
+  Use this worker to send them and process them on your server.
+ - Use [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for your requests.  
+ 
+### rws.log
+
+#### Definition
+see [scrapper.js/rws.log/definition](#definition).  
+
+#### Examples
+see [scrapper.js/rws.log/examples](#examples).  
+
+#### Good to know
+Logs are also displayed as is in the extension tab developer console.
+
+### rws.resolve
+
+You must always call this function to end your script, or it will hang and never stop.  
+
+#### Definition
+```javascript
+/** 
+ * Call this function to : end your script
+ * @returns {void} make sure to end your script after this call.
+ */
+resolve: () => {},
+```
+#### Examples
+Ends your script.  
+```javascript
+rws.resolve();
+```
+Use it in a promise.  
+```javascript
+fetch('https://swapi.dev/api/people/1')
+.then(response => response.json())
+.then(rws.log)
+.then(rws.resolve)
+```
+#### Good to know
+Your script runs inside a promise. Therefor failing to call `rws.resolve()` will result in an ever hanging dataworker.  
+When it happens, click again the play button, it will terminate the worker.
+
+### rws.data
+
+An object containing the data from DATA.JSON.
+
+#### Definition
+```javascript
+/** 
+ * @type {Array.<any>} - the data previously scrapped.
+ */
+data: [],
+```
+
+#### Examples
+Ends your script.  
+```javascript
+rws.data.map(...);
+```
+
+#### Good to know
+You can't edit them. At least it won't be reflected back in DATA.JSON.  
