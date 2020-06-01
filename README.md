@@ -154,3 +154,24 @@ if (document.URL.includes('url/path/to/catch.robots'))
 Make sure your script end after calling this function, otherwise the rest will be executed causing unwanted behaviors.  
 
 ## URLS.JSON
+
+The content of this file is used when you click on `Run on all URLs and save scrapped data`.  
+Each URL is processed one after another.  
+The next URL is processed once scrapper has finished executing and once `buttonPath` is null or undefined.  
+
+The content of URLS.JSON will be processed with `JSON.parse`. Therefor:  
+**Good**
+```json
+{
+  "url1"
+}
+```
+**Bad**
+```json
+{
+  "url1",
+  "url2", //some javascript comment
+  'url3',
+  "url4",
+}
+```
