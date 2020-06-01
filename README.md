@@ -18,6 +18,7 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
         2. [rws.resolve](#rwsresolve)  
         3. [rws.manualActionRequired](#rwsmanualactionrequired)  
     2. [URLS.JSON](#urlsjson)  
+    3. [DATA.JSON](#datajson)  
 
 
 # Usage
@@ -175,3 +176,34 @@ The content of URLS.JSON will be processed with `JSON.parse`. Therefor:
   "url4",
 }
 ```
+
+## DATA.JSON
+
+This file is read-only.
+This content of this file is JSON.  
+It is displayed inside the monaco editor, therefor provides its reading functionnality and colorization.
+
+This file is populated after `Run on all URLs and save scrapped data` has finnished running, by the data you scrapped.
+
+### Example
+Let's say you scrap wikipedia.org with this script:
+```javascript
+let img = document.querySelector('img').src;
+rws.resolve({data: {img}});
+```
+DATA.JSON will look like this:  
+```json
+[
+  {
+    "url": "https://www.wikipedia.org/",
+    "date": "2020-06-01T18:34:47.949Z",
+    "title": "Wikipedia",
+    "userData": {
+      "img": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png"
+    }
+  }
+]
+```
+Each time scrapper.js run, the scrapped data are encapsulated inside `userData`.  
+`url`, `date`, `title` are also automatically filled in.  
+NB: `date` is the result of `new Date()` at the time the data was returned.
