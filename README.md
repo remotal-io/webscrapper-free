@@ -13,19 +13,26 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
 # Table of content
 
 1. [Usage](#usage)  
-    1. [SCRAPPER.JS](#scrapperjs)  
+    1. [COMMON](#common)
+    2. [SCRAPPER.JS](#scrapperjs)  
         1. [rws.log](#rwslog)  
         2. [rws.resolve](#rwsresolve)  
         3. [rws.manualActionRequired](#rwsmanualactionrequired)  
-    2. [URLS.JSON](#urlsjson)  
-    3. [DATA.JSON](#datajson)  
-    3. [DATAWORKER.JS](#dataworkerjs)  
+    3. [URLS.JSON](#urlsjson)  
+    4. [DATA.JSON](#datajson)  
+    5. [DATAWORKER.JS](#dataworkerjs)  
         1. [rws.log](#rwslog-1)  
         2. [rws.resolve](#rwsresolve-1)  
         3. [rws.data](#rwsdata)  
         4. [rws.saveAs](#rwssaveas)  
 
 # Usage
+
+## Common
+
+You javascript code, is run inside an `async function` inside a `Promise`.  
+It means you can use `await` directly, but you must make sure to call `rws.resolve(...)` (cf according definitions [scrapper](#rwsresolve)/[dataworker]((#rwsresolve-1))) to actually end your script.
+
 
 ## SCRAPPER.JS
 
