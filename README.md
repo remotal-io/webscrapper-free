@@ -36,9 +36,12 @@ It means you can use `await` directly, but you must make sure to call `rws.resol
 
 ## SCRAPPER.JS
 
-This script is run inside a content script injected in the selected target tab.  
+This script is run as a content script injected in the selected target tab.  
 It means you can manipulate DOM, and you have a separate javascript runtime. Even if the target website uses JQuery, you won't have access to it.  
 Also, you should never use global variable inside this script. do not use `window.myvar =...` or `var myvar =...`.  
+  
+It is injected after the tab's loading status switch to `"complete"`.  
+It is noteworthy that some ecommerce website tries to prevent this status from being emitted by loading some ressources with a very long timeout (such as darty.fr). But they will timeout at some point, so you just need to wait.
 
 ### rws.log
 
