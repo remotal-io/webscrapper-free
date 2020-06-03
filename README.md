@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/webscrapper-free/community](https://badges.gitter.im/webscrapper-free/community.svg)](https://gitter.im/webscrapper-free/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This is a free chrome extension for developers. It provides web-scrapping capabilities in Javascript inside the browser.
+This is a free extension for developers. It provides web-scrapping capabilities in Javascript inside the browser.
 
 # Presentation Video
 [![youtubevideo](https://img.youtube.com/vi/7GL9g8ac9ME/0.jpg)](https://youtu.be/7GL9g8ac9ME)
@@ -14,13 +14,15 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
 
 1. [Usage](#usage)  
     1. [COMMON](#common)
-    2. [SCRAPPER.JS](#scrapperjs)  
+    3. [STORAGE](#storage)
+    4. [COMPATABILITY](#compatability)
+    5. [SCRAPPER.JS](#scrapperjs)  
         1. [rws.log](#rwslog)  
         2. [rws.resolve](#rwsresolve)  
         3. [rws.manualActionRequired](#rwsmanualactionrequired)  
-    3. [URLS.JSON](#urlsjson)  
-    4. [DATA.JSON](#datajson)  
-    5. [DATAWORKER.JS](#dataworkerjs)  
+    6. [URLS.JSON](#urlsjson)  
+    7. [DATA.JSON](#datajson)  
+    8. [DATAWORKER.JS](#dataworkerjs)  
         1. [rws.log](#rwslog-1)  
         2. [rws.resolve](#rwsresolve-1)  
         3. [rws.data](#rwsdata)  
@@ -33,6 +35,14 @@ This is a free chrome extension for developers. It provides web-scrapping capabi
 You javascript code, is run inside an `async function` inside a `Promise`.  
 It means you can use `await` directly, but you must make sure to call `rws.resolve(...)` (cf according definitions [scrapper](#rwsresolve)/[dataworker]((#rwsresolve-1))) to actually end your script.
 
+## Storage
+Everything is stored in your browser localstorage.  
+If you want to save/share your projects, use the export feature.  
+NB: /!\ You will loose everything by uninstalling the extension.
+
+## Compatability
+For now, only Google Chrome is supported.  
+Depending on demands, support for Firefox will be added.  
 
 ## SCRAPPER.JS
 
