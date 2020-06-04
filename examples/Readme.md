@@ -11,10 +11,13 @@ Types of examples:
     details: Scrap, click on button, wait for ajax reload, scrap again  
     example: [CDiscount-example](#cdiscount-example)  
  3. Wait for captcha validation  
-    details: See how 2Factor was handled in [GitHub-example](#github-example).  
+    details: See how 2Factor was handled in [GitHub-example](#github-example)  
  4. Flow of action:  
     details: Login, pass 2factor if needed, go to repositories, scrap all repositories  
     example: [GitHub-example](#github-example)  
+ 5. Post data from dataworker.js:  
+    details: Uses fetch to post json data, examples with `async` and `then`.  
+    example: [dataworker.js](#dataworkerjs)  
 
 ## Vinted-example
 
@@ -40,3 +43,40 @@ It fills in login and password then submit, if 2Factor is requested it calls `rw
 **URLS.JSON**  
 Just one url : `https://github.com/login`  
 
+## dataworker.js
+
+**with await**
+```javascript
+let url = 'https://api.themoviedb.org/3/movie/76341?api_key=test';
+let options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(rws.data)
+};
+
+// Using fetch to send the data through POST to a random API
+let response = await fetch(url, options);
+let content = await response.json();
+rws.log(content);
+rws.resolve();
+```
+
+**with then()**
+```javascript
+let url = 'https://api.themoviedb.org/3/movie/76341?api_key=test';
+let options = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(rws.data)
+};
+
+// Same with .then flow
+fetch(url, options)
+  .then(response => response.json())
+  .then(rws.log)
+  .then(rws.resolve);
+```
