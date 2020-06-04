@@ -12,23 +12,24 @@ This is a free extension for developers. It provides web-scrapping capabilities 
 
 # Table of content
 
-1. [Usage](#usage)  
-    1. [COMMON](#common)
-    3. [STORAGE](#storage)
-    4. [COMPATABILITY](#compatability)
-    5. [SCRAPPER.JS](#scrapperjs)  
-        1. [rws.log](#rwslog)  
-        2. [rws.resolve](#rwsresolve)  
-        3. [rws.manualActionRequired](#rwsmanualactionrequired)  
-    6. [URLS.JSON](#urlsjson)  
-    7. [DATA.JSON](#datajson)  
-    8. [DATAWORKER.JS](#dataworkerjs)  
-        1. [rws.log](#rwslog-1)  
-        2. [rws.resolve](#rwsresolve-1)  
-        3. [rws.data](#rwsdata)  
-        4. [rws.saveAs](#rwssaveas)  
+1. [EXAMPLES](#examples)
+2. [COMMON](#common)
+3. [STORAGE](#storage)
+4. [COMPATABILITY](#compatability)
+5. [SCRAPPER.JS](#scrapperjs)  
+    1. [rws.log](#rwslog)  
+    2. [rws.resolve](#rwsresolve)  
+    3. [rws.manualActionRequired](#rwsmanualactionrequired)  
+6. [URLS.JSON](#urlsjson)  
+7. [DATA.JSON](#datajson)  
+8. [DATAWORKER.JS](#dataworkerjs)  
+    1. [rws.log](#rwslog-1)  
+    2. [rws.resolve](#rwsresolve-1)  
+    3. [rws.data](#rwsdata)  
+    4. [rws.saveAs](#rwssaveas)  
 
-# Usage
+## Examples
+Several examples are provided here : https://github.com/remotal-io/webscrapper-free/tree/master/examples  
 
 ## Common
 
