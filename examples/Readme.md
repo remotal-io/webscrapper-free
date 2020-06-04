@@ -11,11 +11,10 @@ Types of examples:
     details: Scrap, click on button, wait for ajax reload, scrap again  
     example: [CDiscount-example](#cdiscount-example)  
  3. Wait for captcha validation  
-    details: Scrap, etc  
-    example: TODO  
+    details: See how 2Factor was handled in [GitHub-example](#github-example).  
  4. Flow of action:  
-    details: Login, consult profile, etc  
-    example: TODO  
+    details: Login, pass 2factor if needed, go to repositories, scrap all repositories  
+    example: [GitHub-example](#github-example)  
 
 ## Vinted-example
 
@@ -25,10 +24,6 @@ It scraps a list of product, click on the "NEXT PAGE" button, wait 1.2 sec after
 **URLS.JSON**  
 It runs scrapper.js on 2 different products page (see URLS.JSON).  
 
-**DATAWORKER.JS**  
-It sends the data via POST to a random API.  
-It uses `fetch()`. And shows how to use it either with `await` or `.then()`.  
-
 ## CDiscount-example
 
 **SCRAPPER.JS**  
@@ -37,6 +32,11 @@ It scraps a list of product, delete the list of  product, click on the "NEXT PAG
 **URLS.JSON**  
 It runs scrapper.js on 2 different products page (see URLS.JSON).  
 
-**DATAWORKER.JS**  
-It sends the data via POST to a random API.  
-It uses `fetch()`. And shows how to use it either with `await` or `.then()`.  
+## GitHub-example
+
+**SCRAPPER.JS**  
+It fills in login and password then submit, if 2Factor is requested it calls `rws.manualActionNeeded` to notify the user to solve it, it then go to the user repositories page, it scraps all the repositories' name (pagination is handled).  
+
+**URLS.JSON**  
+Just one url : `https://github.com/login`  
+
