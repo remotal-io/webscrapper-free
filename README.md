@@ -8,7 +8,7 @@ This is a free extension for developers. It provides web-scrapping capabilities 
 [![youtubevideo](https://img.youtube.com/vi/7GL9g8ac9ME/0.jpg)](https://youtu.be/7GL9g8ac9ME)
 
 # Installation
- Link to chrome web store coming on July 1st.
+Get it from the [chrome web store](https://chrome.google.com/webstore/detail/webscrapper-for-developer/agkbkgialbnmaeamocceenjbhcjagigf)
 
 # Table of content
 
