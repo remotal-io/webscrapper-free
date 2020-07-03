@@ -291,6 +291,11 @@ This file is populated after `Run on all URLs and save scrapped data` has finnis
 ### Example
 Let's say you scrap wikipedia.org with this script:
 ```javascript
+// URLS.JSON
+{
+  "https://www.wikipedia.org": []
+}
+// SCRAPPER.JS
 let img = document.querySelector('img').src;
 rws.resolve({data: {img}});
 ```
@@ -298,12 +303,14 @@ DATA.JSON will look like this:
 ```json
 [
   {
-    "date": "2020-07-03T14:06:57.959Z",
-    "params": THE_PARAM_USED_IN_URLJSON_HERE,
+    "date": "2020-07-03T14:11:21.133Z",
+    "params": null,
     "success": true,
-    "title": "Use JSDoc: @param",
-    "url": "https://jsdoc.app/tags-param.html",
-    "userData": YOUR_DATA_HERE
+    "title": "Wikipedia",
+    "url": "https://www.wikipedia.org/",
+    "userData": {
+      "img": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png"
+    }
   }
 ]
 ```
