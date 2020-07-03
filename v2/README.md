@@ -20,6 +20,7 @@ Get it from the [chrome web store](https://chrome.google.com/webstore/detail/web
     1. [rws.log](#rwslog)  
     2. [rws.resolve](#rwsresolve)  
     3. [rws.manualActionRequired](#rwsmanualactionrequired)  
+    4. [rws.params](#rwsparams)  
 6. [URLS.JSON](#urlsjson)  
 7. [DATA.JSON](#datajson)  
 8. [DATAWORKER.JS](#dataworkerjs)  
@@ -152,12 +153,21 @@ When is happens, close the target tab and refresh the extension.
 ### rws.manualActionRequired
 
 Maybe the most ground-breaking feature here.  
-When you call this function, it will display a modal in the extension window. Depending on your answer, it will either skip the current page or re-run the script.  
+When you call this function, it will open a new tab in which you  will be asked to either skip or retry. Depending on your answer, it will either skip the current page or re-run the script.  
 
 As example, you can :
  - check whether the website caught you as a robot and displayed a captcha.
  - Call `rws.manualActionRequired` to pause your processing and wait for a user intervention.
  - Re-execute your script again.
+
+### rws.params
+
+It will have one of the following structure:
+```javascript
+{ "type": "json", "json": ....the-data-you-passed-in-URLS.JSON...}
+// OR
+{ "type": "url", "text": "a string containing the response.text() value from the URL you set up"}
+```
 
 #### Definition
 ```javascript
@@ -206,6 +216,70 @@ The content of URLS.JSON will be processed with `JSON.parse`. Therefor:
 }
 ```
 
+The content of URLS.JSON will be validated against the following JSON-SCHEMA.  
+```json
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://www.remotal.io/webscrapper/urls.json",
+  "title": "List of URLs to scrap.",
+  "description": "This defines the  schema of URLS.json.",
+  "type": "object",
+  "propertyNames": {
+    "regexp": /^(https?):\/\/.*$/i
+  },
+  "additionalProperties": { "$ref": "#/definitions/URLParams" },
+  "definitions": {
+    "DataJson": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "pattern": "^json$" },
+        "json": {},
+      },
+      "required": ["type", "json"],
+      "additionalProperties": false,
+    },
+    "DataUrl": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "pattern": "^url$" },
+        "url": { "type": "string" },
+        "options": { "type": "object" },
+      },
+      "required": ["type", "url", "options"],
+      "additionalProperties": false,
+    },
+    "URLParams": {
+      "type": "array",
+        "items": {
+          "anyOf": [
+            { "$ref": "#/definitions/DataUrl" },
+            { "$ref": "#/definitions/DataJson" }
+          ]
+        }
+    }
+  },
+  "default": {},
+  "examples": [
+    {
+      "https://jsdoc.app/tags-param.html": [
+        { "type": "json", "json": [1, 2, 3] },
+        { "type": "json", "json": 1 },
+      ],
+      "http://jsdoc.app/tags-param.html": [
+        { "type": "url",
+          "url": "https://api.themoviedb.org/3/movie/76341?api_key=test1",
+          "options": {
+            "method": "GET",
+            "headers": { "Content-Type": "application/json" },
+          }
+        }
+      ]
+    }
+  ]
+}
+```
+
+
 ## DATA.JSON
 
 This file is read-only.
@@ -224,12 +298,12 @@ DATA.JSON will look like this:
 ```json
 [
   {
-    "url": "https://www.wikipedia.org/",
-    "date": "2020-06-01T18:34:47.949Z",
-    "title": "Wikipedia",
-    "userData": {
-      "img": "https://www.wikipedia.org/portal/wikipedia.org/assets/img/Wikipedia-logo-v2.png"
-    }
+    "date": "2020-07-03T14:06:57.959Z",
+    "params": THE_PARAM_USED_IN_URLJSON_HERE,
+    "success": true,
+    "title": "Use JSDoc: @param",
+    "url": "https://jsdoc.app/tags-param.html",
+    "userData": YOUR_DATA_HERE
   }
 ]
 ```
@@ -239,7 +313,7 @@ NB: `date` is the result of `new Date()` at the time the data was returned.
 
 ## DATAWORKER.JS
 
-This script is run inside a web kworker created in the extension tab.
+This script is run inside a web kworker created in the extension.
 It means you can not manipulate the DOM, and you have a separate javascript runtime.
 
 Reccomendations:
