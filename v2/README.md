@@ -380,7 +380,7 @@ data: [],
 ```
 
 #### Examples
-Ends your script.  
+Iterate over your data.  
 ```javascript
 rws.data.map(...);
 ```
