@@ -35,5 +35,5 @@ https://github.com/remotal-io/webscrapper-free/blob/master/v2/README.md
 
 # Life-Cyle
 
-[![webscrapper flow](https://github.com/remotal-io/webscrapper-free/blob/master/v2/WebScrapper%20flow.jpg?raw=true)
+[![webscrapper flow](https://github.com/remotal-io/webscrapper-free/blob/master/v2/WebScrapper-flow.jpg?raw=true)
 
