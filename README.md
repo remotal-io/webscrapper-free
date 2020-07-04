@@ -26,8 +26,8 @@ We came up with the following new improvments:
     - Parameters for URLs can be static or dynamic by getting them from your server right before scrapping a page.  
     - Using a switch, you can decide to automatically send the data to your server after each iteration of scrapper.js.  
     - In the left panel, you can now schedule your projects to run at different interval automatically
-    - Clicking on the [RUN ON  ALL URLS....] button, will now run scrapper.js in a seperate tab, and  automatically close it at the end.  
-    - Using rws.manualActionRequired("..."), will now open in a seperate tab.  
+    - Clicking on the [RUN ON  ALL URLS....] button, will now run scrapper.js in a separate tab, and  automatically close it at the end.  
+    - Using rws.manualActionRequired("..."), will now open in a separate tab.  
 
 # Documentation
 
