@@ -14,7 +14,7 @@ Get it from the [chrome web store](https://chrome.google.com/webstore/detail/web
 
 1. [What's new in V2](#whatsnewinv2)
 2. [Documentation](#documentation)
-3. [Usage](#usage)
+3. [Life-Cycle](#life-cycle)
 
 # What's new in V2
 
@@ -33,7 +33,7 @@ We came up with the following new improvments:
 
 https://github.com/remotal-io/webscrapper-free/blob/master/v2/README.md
 
-# Life-Cyle
+# Life-Cycle
 
-[![webscrapper flow](https://github.com/remotal-io/webscrapper-free/blob/master/v2/WebScrapper-flow.jpg?raw=true)
+[![webscrapper flow](https://github.com/remotal-io/webscrapper-free/blob/master/v2/WebScrapper-flow.jpg?raw=true)](https://github.com/remotal-io/webscrapper-free/blob/master/v2/WebScrapper-flow.jpg)
 
